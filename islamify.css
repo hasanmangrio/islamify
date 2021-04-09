@@ -1,0 +1,169 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-family: Futura;
+    overflow: hidden;
+    /* font-weight: 500; */
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.main-panel {
+    width: 75%;
+    height: 100%;
+    float: left;
+    background-color: cadetblue;
+    /* padding: 5%; */
+    /* padding-left: 5%;
+    padding-right: 5%; */
+    /* padding-bottom: 2%; */
+    background: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) ), url('bridge.jpg');
+    background-position: 50% 50%;
+    background-blend-mode:ow ;
+    color: white;
+}
+
+.side-panel {
+    width: 25%;
+    height: 100%;
+    float: right;
+}
+
+.quick-links {
+    width: 95%;
+    height: 50%;
+    /* margin-bottom: 30px; */
+    margin: auto;
+}
+
+.quick-links h1 {
+    margin-block-start: unset;
+    padding-top: 15px;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.greeting {
+    font-size: 2em;
+}
+
+.quote {
+    padding-top: 7%;
+}
+
+.quote h1 {
+    font-size: 3em;
+}
+
+.main-panel-top {
+    height: 85%;
+    width: 90%;
+    float: left;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.main-panel-bottom {
+    height: 10%;
+    width: 100%;
+    float: left;
+}
+
+.time {
+    width: 47%;
+    height: 100%;
+    float: left;
+    padding-left: 3%;
+}
+
+.date {
+    width: 47%;
+    height: 100%;
+    float: right;
+    text-align: right;
+    padding-right: 3%;
+}
+
+@font-face {
+    font-family: Futura;
+    src: url(futura/Futura\ Book\ font.ttf);
+}
+
+.quick-links-table {
+    width: 100%;
+    padding: 15px;
+}
+
+.quick-links-table img {
+    clear: right;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.quick-links-table td p {
+    text-align: center;
+    margin-block-start: 8px;
+}
+
+.prayer-times {
+    width: 80%;
+    height: 50%;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.prayer-times-table {
+    border: 3px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    width: -webkit-fill-available;
+}
+
+.prayer-times-table tr {
+    border-top: thin solid;
+    line-height: 35px;
+}
+
+.prayer-times-table-title {
+    white-space: nowrap;
+}
+
+.prayer-times-table-title, .prayer-times-table-heading {
+    border-top: unset !important;
+    border-bottom: unset !important;
+}
+
+.prayer-times-table-heading {
+    color:coral
+}
+
+.prayer-times-table .prayer-times-table-warning {
+    /* line-height: 0px !important; */
+    line-height: 5px !important;
+}
+
+.prayer-times-table-warning u {
+    font-size: xx-small;
+}
+
+.prayer-times-table-warning p {
+    margin-block-start: unset;
+}
+
+.prayer-times-table-warning td {
+    padding: 20px;
+}
+
+/* .prayer-times-table-row td {
+    padding-left: 20px;
+} */
+
+.athan-column {
+    text-align: right;
+    width: 0.1%;
+}

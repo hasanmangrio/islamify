@@ -1,0 +1,9 @@
+{
+    "name": "Salaam New Tab",
+    "version": "1.0",
+    "description": "Custom New Tab theme for Muslims",
+    "chrome_url_overrides": {
+        "newtab": "salaam.html"
+    },
+    "manifest_version": 2
+}
