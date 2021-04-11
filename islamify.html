@@ -3,6 +3,8 @@
         <meta charset="utf-8">
         <title>Salaam New Tab</title>
         <link rel="stylesheet" href="islamify.css">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script type="text/javascript" src="islamify.js"></script>
     </head>
     <body>
         <div class="container">
@@ -46,14 +48,14 @@
                     </table>
                 </div>
                 <div class="prayer-times">
-                    <table class="prayer-times-table">
+                    <table id="prayer-times-table">
                         <tr class="prayer-times-table-title">
                             <th></th><th>Prayer Times for <br /> Shoreline, WA</th><th></th>
                         </tr>
                         <tr class="prayer-times-table-heading">
                             <th></th><th class="athan-column">Athan</th><th>Iqama</th>
                         </tr>
-                        <tr class="prayer-times-table-row">
+                        <tr class="prayer-times-table-row" id="fajrRow">
                             <td>Fajr</td><td class="athan-column">5:59</td><td>6:15</td>
                         </tr>
                         <tr class="prayer-times-table-row">

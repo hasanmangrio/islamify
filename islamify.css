@@ -117,14 +117,14 @@ body, html {
     margin-top: 10px;
 }
 
-.prayer-times-table {
+#prayer-times-table {
     border: 3px solid black;
     border-collapse: collapse;
     text-align: center;
     width: -webkit-fill-available;
 }
 
-.prayer-times-table tr {
+#prayer-times-table tr {
     border-top: thin solid;
     line-height: 35px;
 }
@@ -142,7 +142,7 @@ body, html {
     color:coral
 }
 
-.prayer-times-table .prayer-times-table-warning {
+#prayer-times-table .prayer-times-table-warning {
     /* line-height: 0px !important; */
     line-height: 5px !important;
 }
