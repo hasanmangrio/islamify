@@ -103,7 +103,29 @@ window.onload = function() {
 		navigator.geolocation.getCurrentPosition(userLocationSuccess, userLocationFailure);
 	}
 
+
+	function updateUserLocation(city, state) {
+		var locationElement = document.getElementById('user-location');
+		locationElement.innerText = city + ', ' + state;
+	}
+
+	async function getCity() {
+		console.log('entered getCity');
+		const url = "http://ipinfo.io";
+		await axios.get(url)
+		.then((response) => {
+			console.log('response: ');
+			console.log(response);
+			console.log('city: ' + response.data.city);
+			console.log('state: ' + response.data.region);
+			updateUserLocation(response.data.city, response.data.region);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	}
+
+	getCity();
+		
 	getCoordinates();
-
-
 };

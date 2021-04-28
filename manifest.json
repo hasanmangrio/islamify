@@ -9,5 +9,5 @@
     "permissions": [
         "geolocation"
     ],
-    "content_security_policy": "script-src-elem https://unpkg.com/axios/dist/axios.min.js 'self'; script-src 'self'; default-src 'self'; connect-src http://www.islamicfinder.us/index.php/api/;"
+    "content_security_policy": "script-src-elem https://unpkg.com/axios/dist/axios.min.js 'self'; script-src 'self'; default-src 'self'; connect-src http://ipinfo.io http://www.islamicfinder.us/index.php/api/;"
 }
