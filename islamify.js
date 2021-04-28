@@ -1,7 +1,10 @@
 window.onload = function() {
 	console.log('entered onload');
 	/**
-	 * Make request to Islamic Finder Prayer Times API to retrieve prayer times
+	 * Given a longitude/latitude, make a request to the IslamicFinder Prayer Times API 
+	 * to retrieve prayer times. Pass this info to helper function to update webpage.
+	 * @param {String} longitude 
+	 * @param {String} latitude 
 	 */
 	function getPrayerTimes(longitude, latitude) {
 		console.log('getPrayerTimes');
@@ -22,15 +25,13 @@ window.onload = function() {
 	}
 	
 	/**
-	 * Given a HTTP response object, insert the prayer times data into the appropriate cells
+	 * Given a HTTP response object, insert the prayer times data into the appropriate cells.
 	 * @param {HTTP Object} response 
 	 */
 	function insertPrayerTimesIntoTable(response) {
 		console.log('insertDataIntoTable');
 		var tableElement = document.getElementById('prayer-times-table');  
-		// console.log(response.data.results);
-		// console.log(response.data.results.fajr);
-
+		
 		var prayerTimes = response.data.results;
 
 		var fajrTime = prayerTimes.Fajr;
@@ -60,7 +61,7 @@ window.onload = function() {
 	}
 
 	/**
-	 * Given a time in format "4:57 %am%", return trimmed version without '%', 'am', 'pm'
+	 * Given a time in format "4:57 %am%", return trimmed version without '%', 'am', 'pm'.
 	 * @param {String} time 
 	 */
 	function trimPrayerTime(time) {
@@ -69,29 +70,27 @@ window.onload = function() {
 	}
 
 	/**
-	 * Given a HTTP error object, logs various error info to the console 
+	 * Given a HTTP error object, logs various error info to the console.
 	 * @param {Object} error 
 	 */
 	function logErrorToConsole(error) {
 		console.log('Message: ');
 		console.log(error.message);
-
 		console.log('Status: ');
 		console.log(error.response.status + ' ' + error.response.statusText);
-
 		console.log('Headers: ');
 		console.log(JSON.stringify(error.response.headers, null, '\t'));
-
 		console.log('Data: ');
 		console.log(JSON.stringify(error.response.data, null, '\t'));
 	}
 	
+	/**
+	 * Retrieves a user current GPS location, and passes those coordinates off helper function.
+	 */
 	function getCoordinates() {
 		var userLocationSuccess = function(position) {
 			const { latitude, longitude } = position.coords;
 			console.log('You are located at:');
-			// console.log('Latitude: ' + latitude);
-			// console.log('Longitude: ' + longitude);
 			getPrayerTimes(longitude, latitude);
 		};
 		var userLocationFailure = function(error) {
@@ -103,12 +102,20 @@ window.onload = function() {
 		navigator.geolocation.getCurrentPosition(userLocationSuccess, userLocationFailure);
 	}
 
-
+	/**
+	 * Given a city and state, update the title of the Prayer Times table.
+	 * @param {String} city 
+	 * @param {String} state 
+	 */
 	function updateUserLocation(city, state) {
 		var locationElement = document.getElementById('user-location');
 		locationElement.innerText = city + ', ' + state;
 	}
 
+	/**
+	 * Using the user's IP address data, retrieve the user's current 
+	 * city/state, and pass this data onto the helper function.
+	 */
 	async function getCity() {
 		console.log('entered getCity');
 		const url = "http://ipinfo.io";
