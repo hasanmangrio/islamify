@@ -1,9 +1,13 @@
 {
-    "name": "Salaam New Tab",
+    "name": "Islamify New Tab",
     "version": "1.0",
+    "manifest_version": 2,
     "description": "Custom New Tab theme for Muslims",
     "chrome_url_overrides": {
-        "newtab": "salaam.html"
+        "newtab": "islamify.html"
     },
-    "manifest_version": 2
+    "permissions": [
+        "geolocation"
+    ],
+    "content_security_policy": "script-src-elem https://unpkg.com/axios/dist/axios.min.js 'self'; script-src 'self'; default-src 'self'; connect-src http://www.islamicfinder.us/index.php/api/;"
 }
