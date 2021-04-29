@@ -132,7 +132,103 @@ window.onload = function() {
 		});
 	}
 
-	getCity();
+	function getCurrentDate() {
+		var today = new Date();
+		var dd = String(today.getDate()).padStart(2, '0');
+		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = today.getFullYear();
 		
+		var dayName = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(today);
+		var monthName = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(today)
+		
+		var time = today.toLocaleTimeString();
+		time = time.substring(0, 5) + time.slice(-3);
+
+		const date = [dd, mm, yyyy, dayName, monthName];
+
+		updateGregorianDate(date);
+		updateTime(time);
+
+		return date;
+	}
+
+	function getDateWithSuffix(dd) {
+		if (dd == 31 || dd == 21 || dd == 1) {
+			return dd + "st";
+		} else if (dd == 22 || dd == 2) {
+			return dd + "nd";
+		} else if (dd == 23 || dd == 3) {
+			return dd + "rd";
+		} else {
+			return dd + "th";
+		}
+	};
+
+	function updateGregorianDate(date) {
+		var [ dd, mm, yyyy, dayName, monthName ] = date;
+		dd = getDateWithSuffix(dd);
+		var dateElement = document.getElementById('date');
+		dateElement.innerText = `${dayName}, ${monthName} ${dd}, ${yyyy}`
+	}
+
+	function updateIslamicDate(islamicDate) {
+		const months = [
+			"Muharram",
+			"Safar",
+			"Rabi ul-Awwal",
+			"Rabi uth-Thani",
+			"Jumada al-Ula", 
+			"Jumada al-Thaniyah",
+			"Rajab", 
+			"Sha'aban",
+			"Ramadan",
+			"Shawwal",
+			"Dhul Qi'dah",
+			"Dhul Hijjah",
+		];
+		const dateArr = islamicDate.split('-');
+		if (dateArr.length < 3) {
+			console.log('ERROR: Islamic Date not received in expected format');
+			return;
+		} 
+
+		const year = dateArr[0];
+		const index = parseInt(dateArr[1]) - 1;
+		console.log('index: ' + index);
+		const month = months[index];
+		console.log('month: ' + month);
+		const day = getDateWithSuffix(dateArr[2]);
+
+		var dateElement = document.getElementById('islamic-date');
+		dateElement.innerText = month + ' ' + day + ', ' + year + ' AH';
+	}
+
+	function updateTime(time) {
+		var timeElement = document.getElementById('current-time');
+		timeElement.innerText = time;
+	}
+
+	function getIslamicDate() {	
+		// var hardcodedURL = 'http://www.islamicfinder.us/index.php/api/calendar?day=28&month=4&year=2021';
+		const [ dd, mm, yyyy ] = getCurrentDate();
+		console.log('dd: ' + dd);
+		console.log('mm: ' + mm);
+		console.log('yyyy: ' + yyyy);
+		const baseURL = 'http://www.islamicfinder.us/index.php/api/calendar?day=';
+		const fullURL = baseURL + dd + '&month=' + mm + '&year=' + yyyy;
+		console.log(fullURL);
+		axios.get(fullURL)
+		.then(function (response) {
+			updateIslamicDate(response.data.to);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	}
+
+	getCity();
 	getCoordinates();
+	getIslamicDate();
 };
+
+// http://www.islamicfinder.us/index.php/api/calendar?day=28&month=4&year=2021
