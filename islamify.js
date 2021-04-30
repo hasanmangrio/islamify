@@ -23,6 +23,21 @@ window.onload = function() {
 			logErrorToConsole(error);
 		});   
 	}
+
+	/**
+	 * Given a time String in the format HH:MM, add 10 minutes and return the new time.
+	 * @param {String} time 
+	 */
+	function addTenMinutes(time) {
+		time = time.trim();
+		const dummyDate = 'January 1 1970 ';
+		const date = new Date(dummyDate + time);
+		date.setMinutes(date.getMinutes() + 10);
+		var time = date.toLocaleTimeString();
+		var endIndex = time.lastIndexOf(':');
+		var newTime = time.substring(0, endIndex);
+		return newTime;
+	}
 	
 	/**
 	 * Given a HTTP response object, insert the prayer times data into the appropriate cells.
@@ -33,31 +48,44 @@ window.onload = function() {
 		var tableElement = document.getElementById('prayer-times-table');  
 		
 		var prayerTimes = response.data.results;
+		for (var prayerName in prayerTimes) {
+			prayerTimes[prayerName] = trimPrayerTime(prayerTimes[prayerName]);
+		}
 
 		var fajrTime = prayerTimes.Fajr;
 		var fajrRow = tableElement.getElementsByTagName('tr')[2];
 		var fajrAthanCell = fajrRow.getElementsByTagName('td')[1];
-		fajrAthanCell.innerText = trimPrayerTime(fajrTime);
+		fajrAthanCell.innerText = fajrTime;
+		var fajrIqamaCell = fajrRow.getElementsByTagName('td')[2];
+		fajrIqamaCell.innerText = addTenMinutes(fajrTime);
 
 		var zhuhrTime = prayerTimes.Dhuhr;
 		var zhuhrRow = tableElement.getElementsByTagName('tr')[3];
 		var zhuhrAthanCell = zhuhrRow.getElementsByTagName('td')[1];
-		zhuhrAthanCell.innerText = trimPrayerTime(zhuhrTime);
+		zhuhrAthanCell.innerText = zhuhrTime;
+		var zhuhrIqamaCell = zhuhrRow.getElementsByTagName('td')[2];
+		zhuhrIqamaCell.innerText = addTenMinutes(zhuhrTime);
 
 		var asrTime = prayerTimes.Asr;
 		var asrRow = tableElement.getElementsByTagName('tr')[4];
 		var asrAthanCell = asrRow.getElementsByTagName('td')[1];
-		asrAthanCell.innerText = trimPrayerTime(asrTime);
+		asrAthanCell.innerText = asrTime;
+		var asrIqamaCell = asrRow.getElementsByTagName('td')[2];
+		asrIqamaCell.innerText = addTenMinutes(asrTime);
 
 		var maghribTime = prayerTimes.Maghrib;
 		var maghribRow = tableElement.getElementsByTagName('tr')[5];
 		var maghribAthanCell = maghribRow.getElementsByTagName('td')[1];
-		maghribAthanCell.innerText = trimPrayerTime(maghribTime);
+		maghribAthanCell.innerText = maghribTime;
+		var maghribIqamaCell = maghribRow.getElementsByTagName('td')[2];
+		maghribIqamaCell.innerText = maghribTime;
 
 		var ishaTime = prayerTimes.Isha;
 		var ishaRow = tableElement.getElementsByTagName('tr')[6];
 		var ishaAthanCell = ishaRow.getElementsByTagName('td')[1];
-		ishaAthanCell.innerText = trimPrayerTime(ishaTime);
+		ishaAthanCell.innerText = ishaTime;
+		var ishaIqamaCell = ishaRow.getElementsByTagName('td')[2];
+		ishaIqamaCell.innerText = addTenMinutes(ishaTime);
 	}
 
 	/**
@@ -67,6 +95,8 @@ window.onload = function() {
 	function trimPrayerTime(time) {
 		var cutoff = time.indexOf('%');
 		return time.substring(0, cutoff);
+		// returns time without % but with AM/PM
+		//var newTime = time.substring(0, time.indexOf('%')) + time.substring(time.indexOf('%') + 1, time.length - 1);
 	}
 
 	/**
