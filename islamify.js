@@ -256,9 +256,17 @@ window.onload = function() {
 		});
 	}
 
+	function getUserFirstName() {
+		var name = prompt(`What's your first name?`);
+		if (name != null && name.trim().length > 0) {
+			document.getElementById('first-name').innerHTML = name;
+		}
+	}
+
 	getCity();
 	getCoordinates();
 	getIslamicDate();
+	getUserFirstName();
 };
 
 // http://www.islamicfinder.us/index.php/api/calendar?day=28&month=4&year=2021
