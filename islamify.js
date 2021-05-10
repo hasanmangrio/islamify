@@ -262,17 +262,52 @@ window.onload = function() {
 		});
 	}
 
-	function getUserFirstName() {
+	function promptUserFirstName() {
 		var name = prompt(`What's your first name?`);
 		if (name != null && name.trim().length > 0) {
 			document.getElementById('first-name').innerHTML = name;
-		}
+			storeUserFirstName('firstName', name);
+		}			
+	}
+
+	function storeUserFirstName(key, value) {
+		chrome.storage.sync.set({key: value}, function() {
+			if (chrome.runtime.error) {
+				console.log('ERROR: Chrome storage API runtime error during SET');
+			} else {
+				console.log('Value is set to ' + value);
+			}
+		});
+	}
+
+	function getUserFirstName(key) {
+		chrome.storage.sync.get(key, function(result) {
+			if (!chrome.runtime.error) {
+				console.log('Found name: ' + result.key);
+				const name = result.key;
+				if (name) {
+					console.log('using stored name');
+					document.getElementById('first-name').innerHTML = result.key;
+				} else {
+					console.log('prompting user for name');
+					promptUserFirstName();
+				}
+			} else {
+				console.log('ERROR: Chrome storage API runtime error during GET');
+			}
+		});
+	}
+
+	function resetUserFirstName(key, value) {
+		chrome.storage.sync.set({ key: value }, function() {
+			console.log('Reseting user first name');
+		});
 	}
 
 	getCity();
 	getCoordinates();
 	getIslamicDate();
-	getUserFirstName();
-};
 
-// http://www.islamicfinder.us/index.php/api/calendar?day=28&month=4&year=2021
+	getUserFirstName();
+	// resetUserFirstName('name', '');
+};
