@@ -198,7 +198,7 @@ window.onload = function() {
 		var [ dd, mm, yyyy, dayName, monthName ] = date;
 		dd = getDateWithSuffix(dd);
 		var dateElement = document.getElementById('date');
-		dateElement.innerText = `${dayName}, ${monthName} ${dd}, ${yyyy}`
+		dateElement.innerText = `${dayName} ${monthName} ${dd}, ${yyyy}`
 	}
 
 	function updateIslamicDate(islamicDate) {
