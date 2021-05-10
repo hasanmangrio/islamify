@@ -172,7 +172,7 @@ window.onload = function() {
 		var monthName = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(today)
 		
 		var time = today.toLocaleTimeString();
-		time = time.substring(0, 5) + time.slice(-3);
+		time = getTimeWithoutSeconds(time);
 
 		const date = [dd, mm, yyyy, dayName, monthName];
 
@@ -180,6 +180,12 @@ window.onload = function() {
 		updateTime(time);
 
 		return date;
+	}
+
+	function getTimeWithoutSeconds(time) {
+		var endIndex = time.lastIndexOf(':');
+		var result = time.substring(0, endIndex) + time.slice(-3);
+		return result;
 	}
 
 	function getDateWithSuffix(dd) {
