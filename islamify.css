@@ -167,3 +167,9 @@ body, html {
     text-align: right;
     width: 0.1%;
 }
+
+#change-button {
+    font-size: x-small;
+    cursor: pointer;
+    color: unset;
+}
