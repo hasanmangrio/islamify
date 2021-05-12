@@ -304,10 +304,19 @@ window.onload = function() {
 		});
 	}
 
+	function setUpEditButton() {
+		document.getElementById('change-button').onclick = function() {
+			promptUserFirstName();
+		};
+	}
+
+	setUpEditButton();
+
 	getCity();
 	getCoordinates();
 	getIslamicDate();
 
 	getUserFirstName();
+	// Uncomment this line to simulate a new user installing the extension for the first time
 	// resetUserFirstName('name', '');
 };
