@@ -1,13 +1,100 @@
 <!DOCTYPE html>
     <head>
         <meta charset="utf-8">
-        <title>Salaam New Tab</title>
+        <title>New Tab</title>
         <link rel="stylesheet" href="islamify.css">
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script type="text/javascript" src="islamify.js"></script>
+        <script type="module" src="islamify.js"></script>
     </head>
     <body>
         <div class="container">
+            <div class="side-panel">
+                <div class="quick-links">
+                    <h2>Favorites</h2>
+                    <table class="quick-links-table">
+                        <tr>
+                            <td>
+                                <a href="https://mail.google.com/mail/u/1/#inbox">
+                                <img src="new icons/gmail logo.png">                            
+                                </a>
+                            </td>
+                            <td>
+                                <a href="https://calendar.google.com/calendar/u/1/r?tab=rc">
+                                <img src="new icons/calendar logo.png">
+                                </a>    
+                            </td>
+                            <td>
+                                <a href="https://veeveinc.atlassian.net/wiki/spaces/PROD/overview">
+                                <img src="new icons/confluence logo.png"></td>
+                                </a>
+                        </tr>
+                        <tr>
+                            <td><p>Work Email</p></td>
+                            <td><p>Calendar</p></td>
+                            <td><p>Confluence</p></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="https://mail.google.com/mail/u/0/#inbox">
+                                <img src="new icons/gmail logo.png"></td>
+                            </a>
+                            <td>
+                                <a href="https://calendar.google.com/calendar/u/0/r/month?tab=rc">
+                                <img src="new icons/calendar logo.png"></td>
+                                </a>
+                            <td>
+                                <a href="https://www.youtube.com/">
+                                <img src="new icons/youtube logo.png"></td>
+                                </a>
+                        </tr>
+                        <tr>
+                            <td><p>Life Gmail</p></td>
+                            <td><p>Life Calendar</p></td>
+                            <td><p>Youtube</p></td>
+                        </tr>
+                        <!-- <tr>
+                            <td><img src="icons/trello-icon.png"></td>
+                            <td><img src="icons/add-link-icon.png"></td>
+                        </tr>
+                        <tr>
+                            <td><p>Trello</p></td>
+                            <td><p>Add</p></td>
+                        </tr> -->
+                    </table>
+                </div>
+                <div class="prayer-times">
+                    <table id="prayer-times-table">
+                        <tr class="prayer-times-table-title">
+                            <th><span id="user-location"></span></th>
+                        </tr>
+                        <!-- <tr class="prayer-times-table-heading">
+                            <th></th><th class="athan-column">Athan</th>
+                        </tr> -->
+                        <tr class="prayer-times-table-row" id="fajrRow">
+                            <td>Fajr</td><td class="athan-column">5:59</td>
+                        <tr class="prayer-times-table-row">
+                            <td>Dhuhr</td><td class="athan-column">1:18</td>
+                        </tr>
+                        <tr class="prayer-times-table-row">
+                            <td>Asr</td><td class="athan-column">3:33</td>
+                        </tr>
+                        <tr class="prayer-times-table-row">
+                            <td>Maghrib</td><td class="athan-column">6:16</td>
+                        </tr>
+                        <tr class="prayer-times-table-row">
+                            <td>Isha</td><td class="athan-column">7:38</td>
+                        </tr>
+                        <tr class="prayer-times-table-warning">
+                            <td colspan="2">
+                                <!-- <p></p> -->
+                                <!-- <p>Enable prayer "warning"</p>
+                                <p><u>What is this?</u></p> -->
+                            </td>
+                            <!-- <td></td> -->
+                            <!-- <td><img src="icons/prayer-notif-icon.png"></td> -->
+                        </tr>
+                    </table>
+                </div>
+            </div>
             <div class="main-panel">
                 <div class="main-panel-top">
                     <div class="greeting">
@@ -24,78 +111,8 @@
                         <h1 id='current-time'>6:17 PM</h1>
                     </div>
                     <div class="date">
-                        <h1><span id="date">Friday, March 20th</span><br /></h1>
-                        <h2><span id="islamic-date">Sha'ban 12, 1442 AH</span></h2>
-                    </div>                    
-                </div>
-            </div>
-            <div class="side-panel">
-                <div class="quick-links">
-                    <h2>Quick Access</h2>
-                    <table class="quick-links-table">
-                        <tr>
-                            <td><img src="icons/gmail-icon.jpg"></td>
-                            <td><img src="icons/google-calendar-icon.png"></td>
-                            <td><img src="icons/slack-icon.png"></td>
-                        </tr>
-                        <tr>
-                            <td><p>Gmail</p></td>
-                            <td><p>Calendar</p></td>
-                            <td><p>Slack</p></td>
-                        </tr>
-                        <tr>
-                            <td><img src="icons/medium-icon.png"></td>
-                            <td><img src="icons/google-icon.png"></td>
-                            <td><img src="icons/youtube-icon.png"></td>
-                        </tr>
-                        <tr>
-                            <td><p>Medium</p></td>
-                            <td><p>Google</p></td>
-                            <td><p>Youtube</p></td>
-                        </tr>
-                        <tr>
-                            <td><img src="icons/trello-icon.png"></td>
-                            <td><img src="icons/add-link-icon.png"></td>
-                        </tr>
-                        <tr>
-                            <td><p>Trello</p></td>
-                            <td><p>Add</p></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="prayer-times">
-                    <table id="prayer-times-table">
-                        <tr class="prayer-times-table-title">
-                            <th></th><th>Prayer Times for <br /> <span id="user-location"></span></th><th></th>
-                        </tr>
-                        <tr class="prayer-times-table-heading">
-                            <th></th><th class="athan-column">Athan</th><th>Iqama</th>
-                        </tr>
-                        <tr class="prayer-times-table-row" id="fajrRow">
-                            <td>Fajr</td><td class="athan-column">5:59</td><td>6:15</td>
-                        </tr>
-                        <tr class="prayer-times-table-row">
-                            <td>Dhuhr</td><td class="athan-column">1:18</td><td>1:30</td>
-                        </tr>
-                        <tr class="prayer-times-table-row">
-                            <td>Asr</td><td class="athan-column">3:33</td><td>3:45</td>
-                        </tr>
-                        <tr class="prayer-times-table-row">
-                            <td>Maghrib</td><td class="athan-column">6:16</td><td>6:30</td>
-                        </tr>
-                        <tr class="prayer-times-table-row">
-                            <td>Isha</td><td class="athan-column">7:38</td><td>7:45</td>
-                        </tr>
-                        <tr class="prayer-times-table-warning">
-                            <td colspan="2">
-                                <!-- <p></p> -->
-                                <p>Enable prayer "warning"</p>
-                                <p><u>What is this?</u></p>
-                            </td>
-                            <!-- <td></td> -->
-                            <td><img src="icons/prayer-notif-icon.png"></td>
-                        </tr>
-                    </table>
+                        <h1><span id="date">Friday, March 20th</span></h1>
+                            <!-- <br /><span id="islamic-date">Sha'ban 12, 1442 AH</span></h1></div>                     -->
                 </div>
             </div>
         </div>

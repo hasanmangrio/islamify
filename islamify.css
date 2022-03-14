@@ -10,27 +10,26 @@ body, html {
 .container {
     width: 100%;
     height: 100%;
+    background: url('mountain.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .main-panel {
-    width: 75%;
+    width: 72%;
     height: 100%;
-    float: left;
-    background-color: cadetblue;
+    /* float: left; */
+    /* background-color: white; */
     /* padding: 5%; */
     /* padding-left: 5%;
     padding-right: 5%; */
     /* padding-bottom: 2%; */
-    background: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) ), url('bridge.jpg');
-    background-position: 50% 50%;
-    background-blend-mode:ow ;
-    color: white;
-}
+    
+    /* background-position-y: 100%; */
+    /* background-position: 50% 50%; */
 
-.side-panel {
-    width: 25%;
-    height: 100%;
-    float: right;
+    /* background-blend-mode:ow ; */
+    color: white;
 }
 
 .quick-links {
@@ -38,13 +37,21 @@ body, html {
     height: 50%;
     /* margin-bottom: 30px; */
     margin: auto;
+    color:white;
 }
 
 .quick-links h2 {
     margin-block-start: unset;
-    padding-top: 15px;
+    padding-top: 20px;
     text-align: center;
     margin-bottom: 0px;
+}
+
+.side-panel {
+    width: 28%;
+    height: 100%;
+    float: right;
+    background: rgba(0, 0, 0, 0.2)
 }
 
 .greeting {
@@ -56,7 +63,7 @@ body, html {
 }
 
 .quote h1 {
-    font-size: 3em;
+    font-size: 2em;
 }
 
 .main-panel-top {
@@ -95,7 +102,10 @@ body, html {
 
 .quick-links-table {
     width: 100%;
-    padding: 15px;
+    padding-top: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
+    /* padding: 15px; */
 }
 
 .quick-links-table img {
@@ -103,34 +113,57 @@ body, html {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    padding-top: 15px;
 }
 
 .quick-links-table td p {
     text-align: center;
-    margin-block-start: 8px;
+    margin-block-start: 10px;
 }
+
+.quick-links-table img:hover{
+    /* background-color: #333333; */
+    border-radius: 10px;
+    transform: scale(1.3);
+}
+
 
 .prayer-times {
-    width: 80%;
-    height: 50%;
+    width: 50%;
     margin: auto;
-    margin-top: 10px;
+    text-align: center;
+    color:white;
+    background-color: black;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding-top: 1em;
+    padding-left: 2em;
+    padding-right: 4em;
+    padding-bottom: 1em;
+    font-size: large;
+    /* padding-left: 5em;
+    padding-right: 0em; */
 }
 
-#prayer-times-table {
-    border: 3px solid black;
+  /* #prayer-times-table {
+    border: 3px solid white;
     border-collapse: collapse;
-    text-align: center;
-    width: -webkit-fill-available;
-}
+    text-align: left;
+    width: 5cm
+} */
 
 #prayer-times-table tr {
-    border-top: thin solid;
+    border-top: solid;
     line-height: 35px;
+    width: auto;
+    text-align: left;
 }
 
 .prayer-times-table-title {
     white-space: nowrap;
+    text-align: center;
+    line-height: 15px;
+    width: 105px;
 }
 
 .prayer-times-table-title, .prayer-times-table-heading {
@@ -139,32 +172,32 @@ body, html {
 }
 
 .prayer-times-table-heading {
-    color:coral
+    color:white
 }
 
-#prayer-times-table .prayer-times-table-warning {
+/* #prayer-times-table .prayer-times-table-warning {
     /* line-height: 0px !important; */
-    line-height: 5px !important;
-}
+    /* line-height: 5px !important; */
+/* } */
 
-.prayer-times-table-warning u {
+/* .prayer-times-table-warning u {
     font-size: xx-small;
-}
+} */
 
-.prayer-times-table-warning p {
+/* .prayer-times-table-warning p {
     margin-block-start: unset;
 }
 
 .prayer-times-table-warning td {
     padding: 20px;
-}
-
-/* .prayer-times-table-row td {
-    padding-left: 20px;
 } */
 
+.prayer-times-table-row td {
+    padding-left: 20px;
+}
+
 .athan-column {
-    text-align: right;
+    text-align: center;
     width: 0.1%;
 }
 
