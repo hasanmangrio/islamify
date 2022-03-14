@@ -6,7 +6,7 @@ window.onload = function() {
 	 * @param {String} longitude 
 	 * @param {String} latitude 
 	 */
-	function getPrayerTimes(longitude, latitude) {
+	async function getPrayerTimes(longitude, latitude) {
 		console.log('getPrayerTimes');
 		console.log('long: ' + longitude);
 		console.log('lat: ' + latitude);
@@ -15,28 +15,16 @@ window.onload = function() {
 		const fullURL = baseURL + '&latitude=' + latitude + '&longitude=' + longitude;
 		// axios.get('http://www.islamicfinder.us/index.php/api/prayer_times?country=US&zipcode=98030&method=2')
 		// axios.get('http://www.islamicfinder.us/index.php/api/prayer_times?latitude=47.358675600000005&longitude=-122.17815519999999&method=2&timezone=America/Los_Angeles')
-		axios.get(fullURL)
-		.then(function (response) {
-			insertPrayerTimesIntoTable(response);
-		})
-		.catch(function (error) {
-			logErrorToConsole(error);
-		});   
-	}
-
-	/**
-	 * Given a time String in the format HH:MM, add 10 minutes and return the new time.
-	 * @param {String} time 
-	 */
-	function addTenMinutes(time) {
-		time = time.trim();
-		const dummyDate = 'January 1 1970 ';
-		const date = new Date(dummyDate + time);
-		date.setMinutes(date.getMinutes() + 10);
-		var time = date.toLocaleTimeString();
-		var endIndex = time.lastIndexOf(':');
-		var newTime = time.substring(0, endIndex);
-		return newTime;
+		await fetch(fullURL, { headers })
+				.then((response) => response.json())
+				.then((prayerTimes) => {
+					console.log('prayerTimes:');
+					console.log(prayerTimes);
+					insertPrayerTimesIntoTable(prayerTimes);
+				})
+				.catch(function (error) {
+					logErrorToConsole(error);
+				});   
 	}
 	
 	/**
@@ -47,45 +35,32 @@ window.onload = function() {
 		console.log('insertDataIntoTable');
 		var tableElement = document.getElementById('prayer-times-table');  
 		
-		var prayerTimes = response.data.results;
-		for (var prayerName in prayerTimes) {
-			prayerTimes[prayerName] = trimPrayerTime(prayerTimes[prayerName]);
-		}
+		var prayerTimes = response.results;
 
 		var fajrTime = prayerTimes.Fajr;
-		var fajrRow = tableElement.getElementsByTagName('tr')[2];
+		var fajrRow = tableElement.getElementsByTagName('tr')[1];
 		var fajrAthanCell = fajrRow.getElementsByTagName('td')[1];
-		fajrAthanCell.innerText = fajrTime;
-		var fajrIqamaCell = fajrRow.getElementsByTagName('td')[2];
-		fajrIqamaCell.innerText = addTenMinutes(fajrTime);
+		fajrAthanCell.innerText = trimPrayerTime(fajrTime);
 
 		var zhuhrTime = prayerTimes.Dhuhr;
-		var zhuhrRow = tableElement.getElementsByTagName('tr')[3];
+		var zhuhrRow = tableElement.getElementsByTagName('tr')[2];
 		var zhuhrAthanCell = zhuhrRow.getElementsByTagName('td')[1];
-		zhuhrAthanCell.innerText = zhuhrTime;
-		var zhuhrIqamaCell = zhuhrRow.getElementsByTagName('td')[2];
-		zhuhrIqamaCell.innerText = addTenMinutes(zhuhrTime);
+		zhuhrAthanCell.innerText = trimPrayerTime(zhuhrTime);
 
 		var asrTime = prayerTimes.Asr;
-		var asrRow = tableElement.getElementsByTagName('tr')[4];
+		var asrRow = tableElement.getElementsByTagName('tr')[3];
 		var asrAthanCell = asrRow.getElementsByTagName('td')[1];
-		asrAthanCell.innerText = asrTime;
-		var asrIqamaCell = asrRow.getElementsByTagName('td')[2];
-		asrIqamaCell.innerText = addTenMinutes(asrTime);
+		asrAthanCell.innerText = trimPrayerTime(asrTime);
 
 		var maghribTime = prayerTimes.Maghrib;
-		var maghribRow = tableElement.getElementsByTagName('tr')[5];
+		var maghribRow = tableElement.getElementsByTagName('tr')[4];
 		var maghribAthanCell = maghribRow.getElementsByTagName('td')[1];
-		maghribAthanCell.innerText = maghribTime;
-		var maghribIqamaCell = maghribRow.getElementsByTagName('td')[2];
-		maghribIqamaCell.innerText = maghribTime;
+		maghribAthanCell.innerText = trimPrayerTime(maghribTime);
 
 		var ishaTime = prayerTimes.Isha;
-		var ishaRow = tableElement.getElementsByTagName('tr')[6];
+		var ishaRow = tableElement.getElementsByTagName('tr')[5];
 		var ishaAthanCell = ishaRow.getElementsByTagName('td')[1];
-		ishaAthanCell.innerText = ishaTime;
-		var ishaIqamaCell = ishaRow.getElementsByTagName('td')[2];
-		ishaIqamaCell.innerText = addTenMinutes(ishaTime);
+		ishaAthanCell.innerText = trimPrayerTime(ishaTime);
 	}
 
 	/**
@@ -95,8 +70,6 @@ window.onload = function() {
 	function trimPrayerTime(time) {
 		var cutoff = time.indexOf('%');
 		return time.substring(0, cutoff);
-		// returns time without % but with AM/PM
-		//var newTime = time.substring(0, time.indexOf('%')) + time.substring(time.indexOf('%') + 1, time.length - 1);
 	}
 
 	/**
@@ -149,17 +122,17 @@ window.onload = function() {
 	async function getCity() {
 		console.log('entered getCity');
 		const url = "http://ipinfo.io";
-		await axios.get(url)
-		.then((response) => {
-			console.log('response: ');
-			console.log(response);
-			console.log('city: ' + response.data.city);
-			console.log('state: ' + response.data.region);
-			updateUserLocation(response.data.city, response.data.region);
-		})
-		.catch(function (error) {
-			console.log(error);
-		});
+		const headers = { 
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		}
+		await fetch(url, { headers })
+				.then((response) => response.json())
+				.then((cityData) => {
+					console.log(cityData.city);
+					console.log(cityData.region);
+					updateUserLocation(cityData.city, cityData.region);
+				});
 	}
 
 	function getCurrentDate() {
@@ -204,7 +177,7 @@ window.onload = function() {
 		var [ dd, mm, yyyy, dayName, monthName ] = date;
 		dd = getDateWithSuffix(dd);
 		var dateElement = document.getElementById('date');
-		dateElement.innerText = `${dayName} ${monthName} ${dd}, ${yyyy}`
+		dateElement.innerText = `${dayName}, ${monthName} ${dd}, ${yyyy}`
 	}
 
 	function updateIslamicDate(islamicDate) {
@@ -253,7 +226,8 @@ window.onload = function() {
 		const baseURL = 'http://www.islamicfinder.us/index.php/api/calendar?day=';
 		const fullURL = baseURL + dd + '&month=' + mm + '&year=' + yyyy;
 		console.log(fullURL);
-		axios.get(fullURL)
+		fetch(fullURL)
+		.then((response) => response.json())
 		.then(function (response) {
 			updateIslamicDate(response.data.to);
 		})
@@ -313,10 +287,14 @@ window.onload = function() {
 	setUpEditButton();
 
 	getCity();
+
 	getCoordinates();
-	getIslamicDate();
+	// getIslamicDate();
+	getCurrentDate();
 
 	getUserFirstName();
 	// Uncomment this line to simulate a new user installing the extension for the first time
 	// resetUserFirstName('name', '');
 };
+
+// http://www.islamicfinder.us/index.php/api/calendar?day=28&month=4&year=2021
