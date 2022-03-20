@@ -10,6 +10,6 @@
         "geolocation", "storage"
     ],
     "content_security_policy": {
-        "extension_pages": "default-src 'self'; connect-src http://ipinfo.io http://www.islamicfinder.us/index.php/api/;"
+        "extension_pages": "default-src 'self'; connect-src https://maps.googleapis.com http://ipinfo.io http://www.islamicfinder.us/index.php/api/;"
     }
 }
