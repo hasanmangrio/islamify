@@ -15,7 +15,7 @@ window.onload = function() {
 		const fullURL = baseURL + '&latitude=' + latitude + '&longitude=' + longitude;
 		// axios.get('http://www.islamicfinder.us/index.php/api/prayer_times?country=US&zipcode=98030&method=2')
 		// axios.get('http://www.islamicfinder.us/index.php/api/prayer_times?latitude=47.358675600000005&longitude=-122.17815519999999&method=2&timezone=America/Los_Angeles')
-		await fetch(fullURL, { headers })
+		await fetch(fullURL)
 				.then((response) => response.json())
 				.then((prayerTimes) => {
 					console.log('prayerTimes:');
@@ -95,6 +95,8 @@ window.onload = function() {
 			const { latitude, longitude } = position.coords;
 			console.log('You are located at:');
 			getPrayerTimes(longitude, latitude);
+			const cityWithState = getCityFromCoordinates(longitude, latitude);
+			console.log('You are currently in: ' + cityWithState);
 		};
 		var userLocationFailure = function(error) {
 			console.log('ERROR getting user location');
@@ -106,13 +108,36 @@ window.onload = function() {
 	}
 
 	/**
+	 * Given lat and long, return a string of city, state
+	 * @param {string} longitude 
+	 * @param {string} latitude 
+	 */
+	async function getCityFromCoordinates(longitude, latitude) {
+		// TODO: Move this to a constants file 
+		const API_KEY = 'AIzaSyATl7YnWCDdG76cAH9XfLdvF_L2mMebl-M';
+		const url = `https://maps.googleapis.com/maps/api/geocode/json\?latlng\=${latitude},${longitude}\&key\=${API_KEY}`;
+
+		await fetch(url)
+		.then((response) => response.json())
+		.then((locationData) => {
+			console.log('locationData:');
+			console.log(locationData);
+			const address = locationData.results[0].formatted_address.split(" ");
+			updateUserLocation(address[4], address[5]);
+		})
+		.catch(function (error) {
+			logErrorToConsole(error);
+		});
+	}
+
+	/**
 	 * Given a city and state, update the title of the Prayer Times table.
 	 * @param {String} city 
 	 * @param {String} state 
 	 */
 	function updateUserLocation(city, state) {
 		var locationElement = document.getElementById('user-location');
-		locationElement.innerText = city + ', ' + state;
+		locationElement.innerText = city + ' ' + state;
 	}
 
 	/**
@@ -151,8 +176,35 @@ window.onload = function() {
 
 		updateGregorianDate(date);
 		updateTime(time);
+		updateImage(monthName);
+		updateQuote(dd);
 
 		return date;
+	}
+
+	/**
+	 * Update the background image to the image for the given month
+	 * @param {string} monthName 
+	 */
+	function updateImage(monthName) {
+		document.getElementsByClassName('container')[0].style.backgroundImage = `url('backgrounds/${monthName}.jpg')`
+	}
+
+	/**
+	 * Given a day of the month, update the quote and author element to that 
+	 * index value's content from local txt file
+	 * @param {integer} dayOfMonth 
+	 */
+	function updateQuote(dayOfMonth) {
+		fetch('./quotes.txt')
+			.then(response => response.text())
+			.then(quotesFile => {
+				var quotes = quotesFile.split("\n");
+				var chosenQuote = quotes[dayOfMonth].split("::");
+				console.log(chosenQuote);
+				document.getElementById('quote-content').innerText = `"${chosenQuote[0]}"`;
+				document.getElementById('quote-author').innerText = `- ${chosenQuote[1]}`;
+			});
 	}
 
 	function getTimeWithoutSeconds(time) {
@@ -229,7 +281,7 @@ window.onload = function() {
 		fetch(fullURL)
 		.then((response) => response.json())
 		.then(function (response) {
-			updateIslamicDate(response.data.to);
+			updateIslamicDate(response.to);
 		})
 		.catch(function (error) {
 			console.log(error);
@@ -286,10 +338,10 @@ window.onload = function() {
 
 	setUpEditButton();
 
-	getCity();
+	// getCity();
 
 	getCoordinates();
-	// getIslamicDate();
+	getIslamicDate();
 	getCurrentDate();
 
 	getUserFirstName();
