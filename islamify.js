@@ -201,9 +201,12 @@ window.onload = function() {
 			.then(quotesFile => {
 				var quotes = quotesFile.split("\n");
 				var chosenQuote = quotes[dayOfMonth].split("::");
+				var quote = chosenQuote[0];
+				var author = chosenQuote[1];
+				author = '- ' + author.substring(1, author.length - 1);
 				console.log(chosenQuote);
-				document.getElementById('quote-content').innerText = `"${chosenQuote[0]}"`;
-				document.getElementById('quote-author').innerText = `- ${chosenQuote[1]}`;
+				document.getElementById('quote-content').innerText = quote;
+				document.getElementById('quote-author').innerText = author;
 			});
 	}
 
